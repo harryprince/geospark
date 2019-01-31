@@ -102,7 +102,7 @@ points_tbl <- copy_to(sc, points)
 
 inner join query by `st_contains` function
 
-> convert wkt into geometry object with 4326 crs, wgs84 projection
+> convert wkt into geometry object with 4326 crs which means wgs84 projection
 
 ```{r}
 
