@@ -39,12 +39,12 @@ register_gis(sc)
 prepare mock data
 
 ```{r}
-polygons<-read.table(text="california area|POLYGON ((-126.4746 32.99024, -126.4746 42.55308, -115.4004 42.55308, -115.4004 32.99024, -126.4746 32.99024))
+polygons <- read.table(text="california area|POLYGON ((-126.4746 32.99024, -126.4746 42.55308, -115.4004 42.55308, -115.4004 32.99024, -126.4746 32.99024))
 new york area|POLYGON ((-80.50781 36.24427, -80.50781 41.96766, -70.75195 41.96766, -70.75195 36.24427, -80.50781 36.24427))
 texas area |POLYGON ((-106.5234 25.40358, -106.5234 36.66842, -91.14258 36.66842, -91.14258 25.40358, -106.5234 25.40358))
 dakota area|POLYGON ((-106.084 44.21371, -106.084 49.66763, -95.71289 49.66763, -95.71289 44.21371, -106.084 44.21371))
 ", sep="|",col.names=c("area","geom"))
-points<-read.table(text="New York|NY|POINT (-73.97759 40.74618)
+points <- read.table(text="New York|NY|POINT (-73.97759 40.74618)
 New York|NY|POINT (-73.97231 40.75216)
 New York|NY|POINT (-73.99337 40.7551)
 West Nyack|NY|POINT (-74.06083 41.16094)
@@ -95,8 +95,8 @@ Los Angeles|CA|POINT (-118.3371 34.00975)
 Los Angeles|CA|POINT (-118.2987 33.78659)
 Los Angeles|CA|POINT (-118.3148 34.06271)", sep="|",col.names=c("city","state","geom"))
 
-polygons_tbl <-copy_to(sc, polygons)
-polygons_tbl <-copy_to(sc, points)
+polygons_tbl <- copy_to(sc, polygons)
+points_tbl <- copy_to(sc, points)
 
 ```
 
@@ -105,7 +105,7 @@ inner join query by `st_contains` function
 
 ```{r}
 
-ex2<-copy_to(sc,tbl(sc, sql("  SELECT  area,state,count(*) cnt from
+ex2 <- copy_to(sc,tbl(sc, sql("  SELECT  area,state,count(*) cnt from
                             (select area,ST_GeomFromWKT(polygons.geom ,'4326') as y  from polygons)  polygons,
                             (SELECT ST_GeomFromWKT (points.geom,'4326') as x,state,city from points) points
                             where  ST_Contains(polygons.y,points.x) group by area,state")),"test2")
