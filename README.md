@@ -16,7 +16,7 @@ This package aims at bringing local `sf` functions to distributed spark mode wit
 
 ## Getting Started
 
-here is a mini example about geofence optimized join query with quadrad tree indexing: 
+here is a mini example about optimized spatial join query with quadrad tree indexing: 
 
 firstly, initilize envs
 
