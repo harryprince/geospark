@@ -12,18 +12,24 @@ This package aims at bringing local `sf` functions to distributed spark mode wit
 
 ## Getting Started
 
-init envs
+here is a mini example about geofence optimized join query with quadrad tree indexing: 
+
+firstly, initilize envs
 
 ```{r}
 library(sparklyr)
 library(dplyr)
 library(geospark)
-conf=spark_config()
-conf$spark.serializer<-"org.apache.spark.serializer.KryoSerializer"
-conf$spark.kryo.registrator<-"org.datasyslab.geospark.serde.GeoSparkKryoRegistrator"
+conf = spark_config()
+conf$spark.serializer <- "org.apache.spark.serializer.KryoSerializer"
+conf$spark.kryo.registrator <- "org.datasyslab.geospark.serde.GeoSparkKryoRegistrator"
 sc <- spark_connect(master = "local",config = conf)
-register_gis(sc)
+```
 
+register gis udf for spark connection
+
+```
+register_gis(sc)
 ```
 
 prepare mock data
@@ -90,10 +96,7 @@ polygons_tbl <-copy_to(sc, points)
 
 ```
 
-
-
-Connect and test this package as follows:
-
+inner join query by `st_contains` function
 
 
 ```{r}
@@ -105,6 +108,8 @@ ex2<-copy_to(sc,tbl(sc, sql("  SELECT  area,state,count(*) cnt from
 
 collect(ex2)
 ```
+
+close connection
 
 ```{r}
 spark_disconnect_all()
