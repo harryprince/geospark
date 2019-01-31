@@ -10,6 +10,10 @@ output:
 
 This package aims at bringing local `sf` functions to distributed spark mode with [GeoSpark](https://github.com/DataSystemsLab/GeoSpark) scala package.
 
+## Prerequisites
+
+* Apache Spark 2.X
+
 ## Getting Started
 
 here is a mini example about geofence optimized join query with quadrad tree indexing: 
