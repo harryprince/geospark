@@ -6,20 +6,13 @@ output:
     fig_height: 5
 ---
 
-## Building
+## Introduction
 
-https://github.com/DataSystemsLab/GeoSpark/releases
-
-First build this package, then build its jars by running:
-
-```{r eval=FALSE}
-sparklyr::compile_package_jars()
-```
-
-then build the R package as usual.
+This package aims at bringing local `sf` functions to distributed spark mode with [GeoSpark](https://github.com/DataSystemsLab/GeoSpark) scala package.
 
 ## Getting Started
 
+init envs
 
 ```{r}
 library(sparklyr)
@@ -33,6 +26,7 @@ register_gis(sc)
 
 ```
 
+prepare mock data
 
 ```{r}
 polygons<-read.table(text="california area|POLYGON ((-126.4746 32.99024, -126.4746 42.55308, -115.4004 42.55308, -115.4004 32.99024, -126.4746 32.99024))
@@ -101,11 +95,8 @@ polygons_tbl <-copy_to(sc, points)
 Connect and test this package as follows:
 
 
+
 ```{r}
-ex1<-spark_session(sc) %>% invoke("sql", "  SELECT  area,state,count(*) cnt from
-       (select area,ST_GeomFromWKT(polygons.geom ,'4326') as y  from polygons)  polygons,
-       (SELECT ST_GeomFromWKT (points.geom,'4326') as x,state,city from points) points
-       where  ST_Contains(polygons.y,points.x) group by area,state")
 
 ex2<-copy_to(sc,tbl(sc, sql("  SELECT  area,state,count(*) cnt from
                             (select area,ST_GeomFromWKT(polygons.geom ,'4326') as y  from polygons)  polygons,
