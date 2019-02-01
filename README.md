@@ -10,7 +10,7 @@ output:
 
 `geospark` R package aims at bringing local `sf` functions to distributed spark mode with [GeoSpark](https://github.com/DataSystemsLab/GeoSpark) scala package.
 
-Currently, geospark support most of important `sf` functions in spark, here is a summary comparison.
+Currently, geospark support most of important `sf` functions in spark, here is a [summary comparison](https://github.com/harryprince/geospark/blob/master/Reference.md).
 
 ## Prerequisites
 
