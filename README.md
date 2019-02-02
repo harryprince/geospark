@@ -12,6 +12,25 @@ output:
 
 Currently, geospark support most of important `sf` functions in spark, here is a [summary comparison](https://github.com/harryprince/geospark/blob/master/Reference.md).
 
+## Performance Comparison
+
+the performance comparison example comes from [geospark paper](https://pdfs.semanticscholar.org/347d/992ceec645a28f4e7e45e9ab902cd75ecd92.pdf):
+
+No. |test case | the number of records
+---|---|---
+1|SELECT IDCODE FROM zhenlongxiang WHERE ST_Disjoint(geom,ST_GeomFromText(‘POLYGON((517000 1520000,619000 1520000,619000 2530000,517000 2530000,517000 1520000))’));|85,236 rows
+2| SELECT fid FROM cyclonepoint WHERE ST_Disjoint(geom,ST_GeomFromText(‘POLYGON((90 3,170 3,170 55,90 55,90 3))’,4326)) | 60,591 rows
+
+query performance(ms)
+
+No. | PostGIS/PostgreSQL |GeoSpark SQL| ESRI Spatial Framework for Hadoop
+---|---|---|---
+1 | 9631 | 480 |40,784
+2 | 110872 |394| 64,217
+
+appeartly, the Geospark SQL definitely outperforms PG and ESRI UDF under a very large data set.
+
+
 ## Prerequisites
 
 * Apache Spark 2.X
