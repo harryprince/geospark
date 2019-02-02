@@ -20,7 +20,7 @@ Currently, geospark support most of important `sf` functions in spark, here is a
 
 here is a mini example about optimized spatial join query with quadrad tree indexing: 
 
-firstly, initilize envs
+firstly, initialize envs
 
 ```{r}
 library(sparklyr)
