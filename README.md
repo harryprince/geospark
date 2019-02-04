@@ -42,6 +42,9 @@ here is a mini example about optimized spatial join query with quadrad tree inde
 firstly, initialize envs
 
 ```{r}
+
+devtools::install_github("harryprince/geospark")
+
 library(sparklyr)
 library(dplyr)
 library(geospark)
