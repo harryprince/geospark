@@ -19,6 +19,7 @@ yes|yes|yes|yes|ST_Polygon | Returns a polygon built from the specified linestri
 ## References
 
 * https://postgis.net/docs/reference.html
+* https://github.com/Esri/spatial-framework-for-hadoop/wiki/UDF-Documentation
 * https://github.com/rstudio/cheatsheets/raw/master/sf.pdf
 
 
