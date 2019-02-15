@@ -21,5 +21,6 @@ yes|yes|yes|yes|ST_Polygon | Returns a polygon built from the specified linestri
 * [POSTGIS ST_* REFERENCE](https://postgis.net/docs/reference.html)
 * [ESRI UDF ST_* REFERENCE](https://github.com/Esri/spatial-framework-for-hadoop/wiki/UDF-Documentation)
 * [R SF ST_* REFERENCE](https://github.com/rstudio/cheatsheets/raw/master/sf.pdf)
+* [GeoSpark ST_* REFERENCE](https://datasystemslab.github.io/GeoSpark/api/sql/GeoSparkSQL-Constructor/)
 
 
