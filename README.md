@@ -30,6 +30,9 @@ No. | PostGIS/PostgreSQL |GeoSpark SQL| ESRI Spatial Framework for Hadoop
 
 appeartly, the Geospark SQL definitely outperforms PG and ESRI UDF under a very large data set.
 
+If you are wondering how the spatial index accelerate the query process, here is a good Uber example:
+[Unwinding Uber’s Most Efficient Service](https://medium.com/@buckhx/unwinding-uber-s-most-efficient-service-406413c5871d#.dg5v6irao)
+and the (Chinese translation version)[https://segmentfault.com/a/1190000008657566]
 
 ## Prerequisites
 
