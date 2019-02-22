@@ -6,9 +6,9 @@ output:
     fig_height: 5
 ---
 
-[![Build
+![Build
 Status](https://travis-ci.org/harryprince/geospark.svg?branch=master)](https://travis-ci.org/harryprince/geospark)
-[!
+
 
 ## Introduction
 
