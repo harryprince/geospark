@@ -24,7 +24,7 @@ spark_dependencies <- function(spark_version, scala_version, ...) {
     initializer = function(sc, ...) {
       register_gis(sc)
     },
-    web_jars = "https://github.com/javierluraschi/geospark/blob/master/inst/java/%s?raw=true"
+    catalog = "https://github.com/javierluraschi/geospark/blob/master/inst/java/%s?raw=true"
   )
 }
 
