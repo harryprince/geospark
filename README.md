@@ -6,6 +6,10 @@ output:
     fig_height: 5
 ---
 
+[![Build
+Status](https://travis-ci.org/harryprince/geospark.svg?branch=master)](https://travis-ci.org/harryprince/geospark)
+[!
+
 ## Introduction
 
 `geospark` R package aims at bringing local [sf](https://github.com/r-spatial/sf) functions to distributed spark mode with [GeoSpark](https://github.com/DataSystemsLab/GeoSpark) scala package.
