@@ -149,3 +149,7 @@ close connection
 ```{r}
 spark_disconnect_all()
 ```
+
+## Architecture
+
+![](https://user-images.githubusercontent.com/5362577/53225664-bf6abc80-36b3-11e9-8b8e-41611fc7098e.png)
