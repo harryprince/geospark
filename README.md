@@ -57,7 +57,13 @@ library(geospark)
 conf = spark_config()
 conf$spark.serializer <- "org.apache.spark.serializer.KryoSerializer"
 conf$spark.kryo.registrator <- "org.datasyslab.geospark.serde.GeoSparkKryoRegistrator"
+
+# for testing
 sc <- spark_connect(master = "local",config = conf)
+
+# for production 
+# sc <- spark_connect(master = "yarn-client",config = conf) 
+
 ```
 
 register gis udf for spark connection
