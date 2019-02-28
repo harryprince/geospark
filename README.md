@@ -55,7 +55,7 @@ Now we can perform a GeoSpatial join using the `st_contains` which
 converts `wkt` into geometry object with 4326 `crs` which means a
 `wgs84` projection. To get the original data from `wkt` format, we will
 use the `st_geomfromwkt` functions. We can execute this spatial query
-using `DBI` as follows:
+using `DBI`:
 
 ``` r
 DBI::dbGetQuery(sc, "
@@ -74,6 +74,35 @@ DBI::dbGetQuery(sc, "
 4 california area    CA  10
 5   new york area    NY   9
 ```
+
+You can also perform this query using `dplyr 0.9` installed through:
+
+``` r
+remotes::install_github("tidyverse/dplyr")
+remotes::install_github("tidyverse/dbplyr")
+```
+
+Then, you can join as follows:
+
+``` r
+library(dplyr)
+polygons_wkt <- mutate(polygons_wkt, y = st_geomfromwkt(geom, "4326"))
+points_wkt <- mutate(points_wkt, x = st_geomfromwkt(geom, "4326"))
+
+inner_join(polygons_wkt, points_wkt, by = sql("st_contains(y, x)")) %>%
+  group_by(area, state) %>%
+  summarise(cnt = n())
+```
+
+    # Source: spark<?> [?? x 3]
+    # Groups: area
+      area            state   cnt
+      <chr>           <chr> <dbl>
+    1 texas area      TX       10
+    2 dakota area     SD        1
+    3 dakota area     ND       10
+    4 california area CA       10
+    5 new york area   NY        9
 
 Finally, we can disconnect:
 
