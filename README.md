@@ -6,6 +6,7 @@ output:
     fig_height: 5
 ---
 
+[![CRAN version](https://www.r-pkg.org/badges/version/geospark)](https://CRAN.R-project.org/package=geospark)
 [![Build Status](https://travis-ci.org/harryprince/geospark.svg?branch=master)](https://travis-ci.org/harryprince/geospark)
 
 
