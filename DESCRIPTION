@@ -4,6 +4,7 @@ Title: Bring Local Sf to Spark
 Version: 0.1.0
 Author: Harry Zhu
 Maintainer: Harry Zhu <7harryprince@gmail.com>
+BugReports: https://github.com/harryprince/geospark/issues
 Description: This package aims at bringing local sf to distributed spark cluster for easier geocomputing.
 License: Apache License
 Encoding: UTF-8
