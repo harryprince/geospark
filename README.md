@@ -8,7 +8,7 @@ output:
 
 [![CRAN version](https://www.r-pkg.org/badges/version/geospark)](https://CRAN.R-project.org/package=geospark)
 [![Build Status](https://travis-ci.org/harryprince/geospark.svg?branch=master)](https://travis-ci.org/harryprince/geospark)
-
+[![](https://badges.ropensci.org/28_status.svg)](https://github.com/ropensci/software-review/issues/288)
 
 ## Introduction & Philosophy
 
