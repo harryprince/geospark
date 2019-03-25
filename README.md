@@ -50,7 +50,7 @@ firstly, initialize envs
 
 ```{r}
 
-devtools::install_github("harryprince/geospark")
+pak::pkg_install("harryprince/geospark")
 
 library(sparklyr)
 library(dplyr)
