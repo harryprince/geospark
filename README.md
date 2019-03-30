@@ -6,9 +6,11 @@ output:
     fig_height: 5
 ---
 
+![](https://image-static.segmentfault.com/101/895/1018959988-5c9809116a126)
+
 [![CRAN version](https://www.r-pkg.org/badges/version/geospark)](https://CRAN.R-project.org/package=geospark)
 [![Build Status](https://travis-ci.org/harryprince/geospark.svg?branch=master)](https://travis-ci.org/harryprince/geospark)
-
+[![]()](https://github.com/ropensci/software-review/issues/288)
 
 ## Introduction & Philosophy
 
@@ -42,6 +44,11 @@ and the [Chinese translation version](https://segmentfault.com/a/119000000865756
 
 * Apache Spark 2.X
 
+## Relationship Operation
+
+
+
+
 ## Getting Started
 
 here is a mini example about optimized spatial join query with quadrad tree indexing: 
@@ -50,7 +57,7 @@ firstly, initialize envs
 
 ```{r}
 
-devtools::install_github("harryprince/geospark")
+pak::pkg_install("harryprince/geospark")
 
 library(sparklyr)
 library(dplyr)
@@ -132,9 +139,29 @@ Los Angeles|CA|POINT (-118.3371 34.00975)
 Los Angeles|CA|POINT (-118.2987 33.78659)
 Los Angeles|CA|POINT (-118.3148 34.06271)", sep="|",col.names=c("city","state","geom"))
 
+```
+
+viz the local data
+
+```
+M1 = polygons %>%
+sf::st_as_sf(wkt="geom") %>% mapview::mapview()
+
+
+M2 = points %>%
+sf::st_as_sf(wkt="geom") %>% mapview::mapview()
+
+M1+M2
+
+```
+
+![](https://segmentfault.com/img/bVbqmP9/view?w=1198&h=766)
+
+copy local data to spark cluster
+
+```
 polygons_tbl <- copy_to(sc, polygons)
 points_tbl <- copy_to(sc, points)
-
 ```
 
 inner join query by `st_contains` function
@@ -148,8 +175,24 @@ ex2 <- copy_to(sc,tbl(sc, sql("  SELECT  area,state,count(*) cnt from
                             (SELECT ST_GeomFromWKT (points.geom,'4326') as x,state,city from points) points
                             where  ST_Contains(polygons.y,points.x) group by area,state")),"test2")
 
-collect(ex2)
+Res = collect(ex2)
 ```
+
+viz the final result
+
+```
+Idx_df = polygons %>% 
+left_join(Res,by = (c("area"="area"))) %>% 
+sf::st_as_sf(wkt="geom")
+
+Idx_df %>% 
+leaflet::leaflet() %>% 
+leaflet::addTiles() %>% 
+leaflet::addPolygons(popup = ~as.character(cnt),color=~colormap::colormap_pal()(cnt)) 
+
+```
+
+![](https://image-static.segmentfault.com/305/306/3053068814-5c9803c8d59a7)
 
 close connection
 
