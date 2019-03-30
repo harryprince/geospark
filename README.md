@@ -132,9 +132,29 @@ Los Angeles|CA|POINT (-118.3371 34.00975)
 Los Angeles|CA|POINT (-118.2987 33.78659)
 Los Angeles|CA|POINT (-118.3148 34.06271)", sep="|",col.names=c("city","state","geom"))
 
+```
+
+viz the local data
+
+```
+M1 = polygons %>%
+sf::st_as_sf(wkt="geom") %>% mapview::mapview()
+
+
+M2 = points %>%
+sf::st_as_sf(wkt="geom") %>% mapview::mapview()
+
+M1+M2
+
+```
+
+
+
+copy local data to spark cluster
+
+```
 polygons_tbl <- copy_to(sc, polygons)
 points_tbl <- copy_to(sc, points)
-
 ```
 
 inner join query by `st_contains` function
