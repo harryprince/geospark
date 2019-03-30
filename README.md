@@ -6,6 +6,8 @@ output:
     fig_height: 5
 ---
 
+![](https://image-static.segmentfault.com/101/895/1018959988-5c9809116a126)
+
 [![CRAN version](https://www.r-pkg.org/badges/version/geospark)](https://CRAN.R-project.org/package=geospark)
 [![Build Status](https://travis-ci.org/harryprince/geospark.svg?branch=master)](https://travis-ci.org/harryprince/geospark)
 [![]()](https://github.com/ropensci/software-review/issues/288)
@@ -41,6 +43,11 @@ and the [Chinese translation version](https://segmentfault.com/a/119000000865756
 ## Prerequisites
 
 * Apache Spark 2.X
+
+## Relationship Operation
+
+
+
 
 ## Getting Started
 
@@ -148,7 +155,7 @@ M1+M2
 
 ```
 
-
+![](https://segmentfault.com/img/bVbqmP9/view?w=1198&h=766)
 
 copy local data to spark cluster
 
@@ -168,8 +175,24 @@ ex2 <- copy_to(sc,tbl(sc, sql("  SELECT  area,state,count(*) cnt from
                             (SELECT ST_GeomFromWKT (points.geom,'4326') as x,state,city from points) points
                             where  ST_Contains(polygons.y,points.x) group by area,state")),"test2")
 
-collect(ex2)
+Res = collect(ex2)
 ```
+
+viz the final result
+
+```
+Idx_df = polygons %>% 
+left_join(Res,by = (c("area"="area"))) %>% 
+sf::st_as_sf(wkt="geom")
+
+Idx_df %>% 
+leaflet::leaflet() %>% 
+leaflet::addTiles() %>% 
+leaflet::addPolygons(popup = ~as.character(cnt),color=~colormap::colormap_pal()(cnt)) 
+
+```
+
+![](https://image-static.segmentfault.com/305/306/3053068814-5c9803c8d59a7)
 
 close connection
 
