@@ -46,6 +46,7 @@ library(geospark)
 
 conf <- spark_config()
 sc <- spark_connect(master = "local", config = conf)
+register_gis(sc)
 ```
 
 Next we will load some spatial dataset containing as polygons and
