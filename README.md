@@ -51,8 +51,8 @@ Next we will load some spatial dataset containing as polygons and
 points.
 
 ``` r
-polygons <- read.table("inst/examples/polygons.txt", sep="|", col.names=c("area","geom"))
-points <- read.table("inst/examples/points.txt", sep="|", col.names=c("city","state","geom"))
+polygons <- read.table(system.file(package="geospark","examples/polygons.txt"), sep="|", col.names=c("area","geom"))
+points <- read.table(system.file(package="geospark","examples/points.txt"), sep="|", col.names=c("city","state","geom"))
 
 polygons_wkt <- copy_to(sc, polygons)
 points_wkt <- copy_to(sc, points)
