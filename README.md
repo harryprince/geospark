@@ -75,6 +75,7 @@ M1+M2
 
 ![](https://segmentfault.com/img/bVbqmP9/view?w=1198&h=766)
 
+### The Spark GIS SQL Mode
 
 Now we can perform a GeoSpatial join using the `st_contains` which
 converts `wkt` into geometry object with 4326 `crs` which means a
@@ -99,6 +100,8 @@ DBI::dbGetQuery(sc, "
 4 california area    CA  10
 5   new york area    NY   9
 ```
+
+### The Tidyverse Mode
 
 You can also perform this query using `dplyr 0.9` installed through:
 
