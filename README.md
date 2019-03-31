@@ -14,138 +14,51 @@ output:
 
 ## Introduction & Philosophy
 
-The origin idea comes from [Uber](https://www.oreilly.com/ideas/query-the-planet-geospatial-big-data-analytics-at-uber), which proposed a ESRI Hive UDF + Presto solution to solve large-scale geospatial data processing toolbox in production.
+The origin idea comes from [Uber](https://www.oreilly.com/ideas/query-the-planet-geospatial-big-data-analytics-at-uber), which proposed a ESRI Hive UDF + Presto solution to solve large-scale geospatial data processing problem in production.
 
 However, The Uber solution is not open source yet and Presto is not popular than Spark.
 
 In that, `geospark` R package aims at bringing local [sf](https://github.com/r-spatial/sf) functions to distributed spark mode with [GeoSpark](https://github.com/DataSystemsLab/GeoSpark) scala package.
 
-Currently, geospark support most of important `sf` functions in spark, here is a [summary comparison](https://github.com/harryprince/geospark/blob/master/Reference.md).
+Currently, `geospark` support most of important `sf` functions in spark,
+here is a [summary
+comparison](https://github.com/harryprince/geospark/blob/master/Reference.md).
 
-## Performance Comparison
+## Installation
 
-the performance comparison example comes from [geospark paper](https://pdfs.semanticscholar.org/347d/992ceec645a28f4e7e45e9ab902cd75ecd92.pdf):
+This package requires Apache Spark 2.X which you can install using
+`sparklyr::install_spark("2.4")`; in addition, you can install
+`geospark` as follows:
 
-No. |test case | the number of records
----|---|---
-1|SELECT IDCODE FROM zhenlongxiang WHERE ST_Disjoint(geom,ST_GeomFromText(‘POLYGON((517000 1520000,619000 1520000,619000 2530000,517000 2530000,517000 1520000))’));|85,236 rows
-2| SELECT fid FROM cyclonepoint WHERE ST_Disjoint(geom,ST_GeomFromText(‘POLYGON((90 3,170 3,170 55,90 55,90 3))’,4326)) | 60,591 rows
-
-query performance(ms)
-
-No. | PostGIS/PostgreSQL |GeoSpark SQL| ESRI Spatial Framework for Hadoop
----|---|---|---
-1 | 9631 | 480 |40,784
-2 | 110872 |394| 64,217
-
-appeartly, the Geospark SQL definitely outperforms PG and ESRI UDF under a very large data set.
-
-If you are wondering how the spatial index accelerate the query process, here is a good Uber example:
-[Unwinding Uber’s Most Efficient Service](https://medium.com/@buckhx/unwinding-uber-s-most-efficient-service-406413c5871d#.dg5v6irao)
-and the [Chinese translation version](https://segmentfault.com/a/1190000008657566)
-
-## Prerequisites
-
-* Apache Spark 2.X
-
-## Relationship Operation
-
-
-
+``` r
+pak::pkg_install("harryprince/geospark")
+```
 
 ## Getting Started
 
-here is a mini example about optimized spatial join query with quadrad tree indexing: 
+In this example we will join spatial data using quadrad tree indexing.
+First, we will initialize the `geospark` extension and connect to Spark
+using `sparklyr`:
 
-firstly, initialize envs
-
-```{r}
-
-pak::pkg_install("harryprince/geospark")
-
+``` r
 library(sparklyr)
-library(dplyr)
 library(geospark)
-conf = spark_config()
-conf$spark.serializer <- "org.apache.spark.serializer.KryoSerializer"
-conf$spark.kryo.registrator <- "org.datasyslab.geospark.serde.GeoSparkKryoRegistrator"
 
-# for testing
-sc <- spark_connect(master = "local",config = conf)
-
-# for production 
-# sc <- spark_connect(master = "yarn-client",config = conf) 
-
+sc <- spark_connect(master = "local", config = conf)
 ```
 
-register gis udf for spark connection
+Next we will load some spatial dataset containing as polygons and
+points.
 
-```
-register_gis(sc)
-```
+``` r
+polygons <- read.table("inst/examples/polygons.txt", sep="|", col.names=c("area","geom"))
+points <- read.table("inst/examples/points.txt", sep="|", col.names=c("city","state","geom"))
 
-prepare mock data
-
-```{r}
-polygons <- read.table(text="california area|POLYGON ((-126.4746 32.99024, -126.4746 42.55308, -115.4004 42.55308, -115.4004 32.99024, -126.4746 32.99024))
-new york area|POLYGON ((-80.50781 36.24427, -80.50781 41.96766, -70.75195 41.96766, -70.75195 36.24427, -80.50781 36.24427))
-texas area |POLYGON ((-106.5234 25.40358, -106.5234 36.66842, -91.14258 36.66842, -91.14258 25.40358, -106.5234 25.40358))
-dakota area|POLYGON ((-106.084 44.21371, -106.084 49.66763, -95.71289 49.66763, -95.71289 44.21371, -106.084 44.21371))
-", sep="|",col.names=c("area","geom"))
-points <- read.table(text="New York|NY|POINT (-73.97759 40.74618)
-New York|NY|POINT (-73.97231 40.75216)
-New York|NY|POINT (-73.99337 40.7551)
-West Nyack|NY|POINT (-74.06083 41.16094)
-West Point|NY|POINT (-73.9788 41.37611)
-West Point|NY|POINT (-74.3547 41.38782)
-Westtown|NY|POINT (-74.54593 41.33403)
-Floral Park|NY|POINT (-73.70475 40.7232)
-Floral Park|NY|POINT (-73.60177 40.75476)
-Elmira|NY|POINT (-76.79217 42.09192)
-Elmira|NY|POINT (-76.75089 42.14728)
-Elmira|NY|POINT (-76.84497 42.12927)
-Elmira|NY|POINT (-76.80393 42.07202)
-Elmira|NY|POINT (-76.83686 42.08782)
-Elmira|NY|POINT (-76.75089 42.14728)
-Alcester|SD|POINT (-96.63848 42.97422)
-Aurora|SD|POINT (-96.67784 44.28706)
-Baltic|SD|POINT (-96.74702 43.72627)
-Beresford|SD|POINT (-96.79091 43.06999)
-Brandon|SD|POINT (-96.58362 43.59001)
-Minot|ND|POINT (-101.2744 48.22642)
-Abercrombie|ND|POINT (-96.73165 46.44846)
-Absaraka|ND|POINT (-97.21459 46.85969)
-Amenia|ND|POINT (-97.25029 47.02829)
-Argusville|ND|POINT (-96.95043 47.0571)
-Arthur|ND|POINT (-97.2147 47.10167)
-Ayr|ND|POINT (-97.45571 47.02031)
-Barney|ND|POINT (-96.99819 46.30418)
-Blanchard|ND|POINT (-97.25077 47.3312)
-Buffalo|ND|POINT (-97.54484 46.92017)
-Austin|TX|POINT (-97.77126 30.32637)
-Austin|TX|POINT (-97.77126 30.32637)
-Addison|TX|POINT (-96.83751 32.96129)
-Allen|TX|POINT (-96.62447 33.09285)
-Carrollton|TX|POINT (-96.89163 32.96037)
-Carrollton|TX|POINT (-96.89773 33.00542)
-Carrollton|TX|POINT (-97.11628 33.20743)
-Celina|TX|POINT (-96.76129 33.32793)
-Carrollton|TX|POINT (-96.89328 33.03056)
-Carrollton|TX|POINT (-96.77763 32.76727)
-Los Angeles|CA|POINT (-118.2488 33.97291)
-Los Angeles|CA|POINT (-118.2485 33.94832)
-Los Angeles|CA|POINT (-118.276 33.96271)
-Los Angeles|CA|POINT (-118.3076 34.07711)
-Los Angeles|CA|POINT (-118.3085 34.05891)
-Los Angeles|CA|POINT (-118.2943 34.04835)
-Los Angeles|CA|POINT (-118.2829 34.02645)
-Los Angeles|CA|POINT (-118.3371 34.00975)
-Los Angeles|CA|POINT (-118.2987 33.78659)
-Los Angeles|CA|POINT (-118.3148 34.06271)", sep="|",col.names=c("city","state","geom"))
-
+polygons_wkt <- copy_to(sc, polygons)
+points_wkt <- copy_to(sc, points)
 ```
 
-viz the local data
+And we can quickly visulize the dataset by `mapview` and `sf`.
 
 ```
 M1 = polygons %>%
@@ -161,32 +74,67 @@ M1+M2
 
 ![](https://segmentfault.com/img/bVbqmP9/view?w=1198&h=766)
 
-copy local data to spark cluster
 
-```
-polygons_tbl <- copy_to(sc, polygons)
-points_tbl <- copy_to(sc, points)
-```
+Now we can perform a GeoSpatial join using the `st_contains` which
+converts `wkt` into geometry object with 4326 `crs` which means a
+`wgs84` projection. To get the original data from `wkt` format, we will
+use the `st_geomfromwkt` functions. We can execute this spatial query
+using `DBI`:
 
-inner join query by `st_contains` function
-
-> convert wkt into geometry object with 4326 crs which means wgs84 projection
-
-```{r}
-
-ex2 <- copy_to(sc,tbl(sc, sql("  SELECT  area,state,count(*) cnt from
-                            (select area,ST_GeomFromWKT(polygons.geom ,'4326') as y  from polygons)  polygons,
-                            (SELECT ST_GeomFromWKT (points.geom,'4326') as x,state,city from points) points
-                            where  ST_Contains(polygons.y,points.x) group by area,state")),"test2")
-
-Res = collect(ex2)
+``` r
+DBI::dbGetQuery(sc, "
+  SELECT area, state, count(*) cnt FROM
+    (SELECT area, ST_GeomFromWKT(polygons.geom ,'4326') as y FROM polygons) polygons
+  INNER JOIN
+    (SELECT ST_GeomFromWKT (points.geom,'4326') as x, state, city FROM points) points
+  WHERE ST_Contains(polygons.y,points.x) GROUP BY area, state")
 ```
 
-viz the final result
+``` 
+             area state cnt
+1      texas area    TX  10
+2     dakota area    SD   1
+3     dakota area    ND  10
+4 california area    CA  10
+5   new york area    NY   9
+```
+
+You can also perform this query using `dplyr 0.9` installed through:
+
+``` r
+remotes::install_github("tidyverse/dplyr")
+remotes::install_github("tidyverse/dbplyr")
+```
+
+Then, you can join as follows:
+
+``` r
+library(dplyr)
+polygons_wkt <- mutate(polygons_wkt, y = st_geomfromwkt(geom, "4326"))
+points_wkt <- mutate(points_wkt, x = st_geomfromwkt(geom, "4326"))
+
+sc_res = inner_join(polygons_wkt, points_wkt, by = sql("st_contains(y, x)")) %>%
+  group_by(area, state) %>%
+  summarise(cnt = n())
+```
 
 ```
-Idx_df = polygons %>% 
-left_join(Res,by = (c("area"="area"))) %>% 
+    # Source: spark<?> [?? x 3]
+    # Groups: area
+      area            state   cnt
+      <chr>           <chr> <dbl>
+    1 texas area      TX       10
+    2 dakota area     SD        1
+    3 dakota area     ND       10
+    4 california area CA       10
+    5 new york area   NY        9
+```
+
+The final result can be present by `leaflet`.
+
+```
+Idx_df = collect(sc_res) %>% 
+right_join(polygons,by = (c("area"="area"))) %>% 
 sf::st_as_sf(wkt="geom")
 
 Idx_df %>% 
@@ -198,12 +146,56 @@ leaflet::addPolygons(popup = ~as.character(cnt),color=~colormap::colormap_pal()(
 
 ![](https://image-static.segmentfault.com/305/306/3053068814-5c9803c8d59a7)
 
-close connection
+Finally, we can disconnect:
 
-```{r}
+``` r
 spark_disconnect_all()
 ```
 
+## Performance
+
+### Configuration
+
+To improve performance, it is recommended to use the `KryoSerializer`
+and the `GeoSparkKryoRegistrator` before connecting as follows:
+
+``` r
+conf <- spark_config()
+conf$spark.serializer <- "org.apache.spark.serializer.KryoSerializer"
+conf$spark.kryo.registrator <- "org.datasyslab.geospark.serde.GeoSparkKryoRegistrator"
+```
+
+### Benchmarks
+
+This performance comparison is an extract from the original [GeoSpark: A
+Cluster Computing Framework for Processing Spatial
+Data](https://pdfs.semanticscholar.org/347d/992ceec645a28f4e7e45e9ab902cd75ecd92.pdf)
+paper:
+
+| No. | test case                                                                                                                                                            | the number of records |
+| --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
+| 1   | SELECT IDCODE FROM zhenlongxiang WHERE ST\_Disjoint(geom,ST\_GeomFromText(‘POLYGON((517000 1520000,619000 1520000,619000 2530000,517000 2530000,517000 1520000))’)); | 85,236 rows           |
+| 2   | SELECT fid FROM cyclonepoint WHERE ST\_Disjoint(geom,ST\_GeomFromText(‘POLYGON((90 3,170 3,170 55,90 55,90 3))’,4326))                                               | 60,591 rows           |
+
+Query
+performance(ms),
+
+| No. | PostGIS/PostgreSQL | GeoSpark SQL | ESRI Spatial Framework for Hadoop |
+| --- | ------------------ | ------------ | --------------------------------- |
+| 1   | 9631               | 480          | 40,784                            |
+| 2   | 110872             | 394          | 64,217                            |
+
+According to this papaer, the Geospark SQL definitely outperforms PG and
+ESRI UDF under a very large data set.
+
+
+If you are wondering how the spatial index accelerate the query process,
+here is a good Uber example: [Unwinding Uber’s Most Efficient
+Service](https://medium.com/@buckhx/unwinding-uber-s-most-efficient-service-406413c5871d#.dg5v6irao)
+and the [Chinese translation
+version](https://segmentfault.com/a/1190000008657566)
+
 ## Architecture
 
-![](https://user-images.githubusercontent.com/5362577/53225664-bf6abc80-36b3-11e9-8b8e-41611fc7098e.png)
+# ![](https://user-images.githubusercontent.com/5362577/53225664-bf6abc80-36b3-11e9-8b8e-41611fc7098e.png)
+
