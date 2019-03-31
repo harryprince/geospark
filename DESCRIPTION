@@ -1,10 +1,11 @@
 Package: geospark
 Type: Package
 Title: Bring Local Sf to Spark
-Version: 0.1.0
+Version: 0.0.2
 Author: Harry Zhu
 Maintainer: Harry Zhu <7harryprince@gmail.com>
-Description: This package aims at bringing local sf to distributed spark cluster for easier geocomputing.
+BugReports: https://github.com/harryprince/geospark/issues
+Description: R binds geospark extending sparklyr R package to make geocomputing easier.
 License: Apache License
 Encoding: UTF-8
 LazyData: true

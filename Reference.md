@@ -11,6 +11,9 @@ yes|yes|yes|yes|ST_Point | Returns an ST_Point with the given coordinate values.
 yes|no|no|no|ST_PointFromGeoHash | Return a point from a GeoHash string.
 yes|yes|yes|yes|ST_Polygon | Returns a polygon built from the specified linestring and SRID.
 
+### Geometry Relation
+
+![](https://segmentfault.com/img/bVbqFe3?w=1280&h=508)
 
 ### Geometry Measurement
 

@@ -1,17 +1,24 @@
-GeoSpark: R interface to GeoSpark
-================
+---
+title: "GeoSpark: Bring sf to spark"
+output:
+  github_document:
+    fig_width: 9
+    fig_height: 5
+---
 
-[![CRAN
-version](https://www.r-pkg.org/badges/version/geospark)](https://CRAN.R-project.org/package=geospark)
-[![Build
-Status](https://travis-ci.org/harryprince/geospark.svg?branch=master)](https://travis-ci.org/harryprince/geospark)
+![](https://image-static.segmentfault.com/101/895/1018959988-5c9809116a126)
+
+[![CRAN version](https://www.r-pkg.org/badges/version/geospark)](https://CRAN.R-project.org/package=geospark)
+[![Build Status](https://travis-ci.org/harryprince/geospark.svg?branch=master)](https://travis-ci.org/harryprince/geospark)
+[![]()](https://github.com/ropensci/software-review/issues/288)
 
 ## Introduction & Philosophy
 
-The `geospark` R package aims at bringing local
-[sf](https://github.com/r-spatial/sf) functions to distributed spark
-mode with [GeoSpark](https://github.com/DataSystemsLab/GeoSpark) scala
-package.
+The origin idea comes from [Uber](https://www.oreilly.com/ideas/query-the-planet-geospatial-big-data-analytics-at-uber), which proposed a ESRI Hive UDF + Presto solution to solve large-scale geospatial data processing problem in production.
+
+However, The Uber solution is not open source yet and Presto is not popular than Spark.
+
+In that, `geospark` R package aims at bringing local [sf](https://github.com/r-spatial/sf) functions to distributed spark mode with [GeoSpark](https://github.com/DataSystemsLab/GeoSpark) scala package.
 
 Currently, `geospark` support most of important `sf` functions in spark,
 here is a [summary
@@ -24,13 +31,13 @@ This package requires Apache Spark 2.X which you can install using
 `geospark` as follows:
 
 ``` r
-devtools::install_github("harryprince/geospark")
+pak::pkg_install("harryprince/geospark")
 ```
 
 ## Getting Started
 
 In this example we will join spatial data using quadrad tree indexing.
-First, we will initialize the `geospark` extension and connecto to Spark
+First, we will initialize the `geospark` extension and connect to Spark
 using `sparklyr`:
 
 ``` r
@@ -50,6 +57,23 @@ points <- read.table("inst/examples/points.txt", sep="|", col.names=c("city","st
 polygons_wkt <- copy_to(sc, polygons)
 points_wkt <- copy_to(sc, points)
 ```
+
+And we can quickly visulize the dataset by `mapview` and `sf`.
+
+```
+M1 = polygons %>%
+sf::st_as_sf(wkt="geom") %>% mapview::mapview()
+
+
+M2 = points %>%
+sf::st_as_sf(wkt="geom") %>% mapview::mapview()
+
+M1+M2
+
+```
+
+![](https://segmentfault.com/img/bVbqmP9/view?w=1198&h=766)
+
 
 Now we can perform a GeoSpatial join using the `st_contains` which
 converts `wkt` into geometry object with 4326 `crs` which means a
@@ -89,11 +113,12 @@ library(dplyr)
 polygons_wkt <- mutate(polygons_wkt, y = st_geomfromwkt(geom, "4326"))
 points_wkt <- mutate(points_wkt, x = st_geomfromwkt(geom, "4326"))
 
-inner_join(polygons_wkt, points_wkt, by = sql("st_contains(y, x)")) %>%
+sc_res = inner_join(polygons_wkt, points_wkt, by = sql("st_contains(y, x)")) %>%
   group_by(area, state) %>%
   summarise(cnt = n())
 ```
 
+```
     # Source: spark<?> [?? x 3]
     # Groups: area
       area            state   cnt
@@ -103,6 +128,23 @@ inner_join(polygons_wkt, points_wkt, by = sql("st_contains(y, x)")) %>%
     3 dakota area     ND       10
     4 california area CA       10
     5 new york area   NY        9
+```
+
+The final result can be present by `leaflet`.
+
+```
+Idx_df = collect(sc_res) %>% 
+right_join(polygons,by = (c("area"="area"))) %>% 
+sf::st_as_sf(wkt="geom")
+
+Idx_df %>% 
+leaflet::leaflet() %>% 
+leaflet::addTiles() %>% 
+leaflet::addPolygons(popup = ~as.character(cnt),color=~colormap::colormap_pal()(cnt)) 
+
+```
+
+![](https://image-static.segmentfault.com/305/306/3053068814-5c9803c8d59a7)
 
 Finally, we can disconnect:
 
@@ -146,6 +188,7 @@ performance(ms),
 According to this papaer, the Geospark SQL definitely outperforms PG and
 ESRI UDF under a very large data set.
 
+
 If you are wondering how the spatial index accelerate the query process,
 here is a good Uber example: [Unwinding Uber’s Most Efficient
 Service](https://medium.com/@buckhx/unwinding-uber-s-most-efficient-service-406413c5871d#.dg5v6irao)
@@ -156,8 +199,3 @@ version](https://segmentfault.com/a/1190000008657566)
 
 # ![](https://user-images.githubusercontent.com/5362577/53225664-bf6abc80-36b3-11e9-8b8e-41611fc7098e.png)
 
-If you are wondering how the spatial index accelerate the query process,
-here is a good Uber example: [Unwinding Uber’s Most Efficient
-Service](https://medium.com/@buckhx/unwinding-uber-s-most-efficient-service-406413c5871d#.dg5v6irao)
-and the [Chinese translation
-version](https://segmentfault.com/a/1190000008657566)
