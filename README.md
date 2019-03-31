@@ -44,6 +44,7 @@ using `sparklyr`:
 library(sparklyr)
 library(geospark)
 
+conf <- spark_config()
 sc <- spark_connect(master = "local", config = conf)
 ```
 
@@ -116,6 +117,9 @@ points_wkt <- mutate(points_wkt, x = st_geomfromwkt(geom, "4326"))
 sc_res = inner_join(polygons_wkt, points_wkt, by = sql("st_contains(y, x)")) %>%
   group_by(area, state) %>%
   summarise(cnt = n())
+  
+sc_res %>%
+  head()
 ```
 
 ```
