@@ -36,9 +36,20 @@ KDB-Tree, Quad-Tree, R-Tree, Voronoi diagram, Hilbert curve, Uniform grids
 
 ### Geometry Measurement
 
-st_area, st_length
+postgis|esri udf|sf|geospark|function| definition
+yes|yes|yes|yes|ST_Length| calculate line length
+yes|yes|yes|yes|ST_Area| calculate polygon area
 
-## Geometry Operations
+## Geometry Advanced Operations
+
+ST_Distance
+ST_ConvexHull
+ST_Envelope
+ST_Centroid
+ST_PrecisionReduce
+ST_IsSimple
+ST_Buffer
+ST_AsText
 
 ## References
 
