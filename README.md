@@ -14,6 +14,8 @@ output:
 
 ## Introduction & Philosophy
 
+Goal: make tranditional GISer handle geospatial big data easier. 
+
 The origin idea comes from [Uber](https://www.oreilly.com/ideas/query-the-planet-geospatial-big-data-analytics-at-uber), which proposed a ESRI Hive UDF + Presto solution to solve large-scale geospatial data processing problem in production.
 
 However, The Uber solution is not open source yet and Presto is not popular than Spark.
