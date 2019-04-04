@@ -211,35 +211,22 @@ version](https://segmentfault.com/a/1190000008657566)
 
 name|desc
 ---|---
-`ST_GeomFromWKT`|
-`ST_GeomFromWKB`|
-`ST_GeomFromGeoJSON`|
-`ST_Point`|
-`ST_PointFromText`|
-`ST_PolygonFromText`|
-`ST_LineStringFromText`|
-`ST_PolygonFromEnvelope`|
-`ST_Circle`|
+`ST_GeomFromWKT`| Construct a Geometry from Wkt.
+`ST_GeomFromWKB`| Construct a Geometry from Wkb.
+`ST_GeomFromGeoJSON`| Construct a Geometry from GeoJSON.
+`ST_Point`| Construct a Point from X and Y. 
+`ST_PointFromText`| Construct a Point from Text, delimited by Delimiter.
+`ST_PolygonFromText`| Construct a Polygon from Text, delimited by Delimiter.
+`ST_LineStringFromText`| Construct a LineString from Text, delimited by Delimiter.
+`ST_PolygonFromEnvelope`| Construct a Polygon from MinX, MinY, MaxX, MaxY.
 
 ### Geometry Measurement
 
 name|desc
 ---|---
-`ST_Length`|
-`ST_Area`|
-
-name|desc
----|---
-`ST_ConvexHull`|
-`ST_Envelope`|
-`ST_Centroid`|
-`ST_Transform`|
-`ST_Intersection`|
-`ST_IsValid`|
-`ST_PrecisionReduce`|
-`ST_IsSimple`|
-`ST_Buffer`|
-`ST_AsText`|
+`ST_Length`| Return the perimeter of A
+`ST_Area`| Return the area of A
+`ST_Distance`| Return the Euclidean distance between A and B
 
 ### Spatial Join
 
@@ -276,12 +263,27 @@ inner_join(x = pointdf1,
 ```
 
 
-## Aggregation
+### Aggregation
 
 name|desc
 ---|---
 `ST_Envelope_Aggr`| Return the entire envelope boundary of all geometries in A
 `ST_Union_Aggr`|Return the polygon union of all polygons in A
+
+### More Advacned Functions
+
+name|desc
+---|---
+`ST_ConvexHull`| Return the Convex Hull of polgyon A
+`ST_Envelope`| Return the envelop boundary of A
+`ST_Centroid`| Return the centroid point of A
+`ST_Transform`| Transform the Spatial Reference System / Coordinate Reference System of A, from SourceCRS to TargetCRS
+`ST_IsValid`| Test if a geometry is well formed
+`ST_PrecisionReduce`| Reduce the decimals places in the coordinates of the geometry to the given number of decimal places. The last decimal place will be rounded.
+`ST_IsSimple`| Test if geometry's only self-intersections are at boundary points.
+`ST_Buffer`| Returns a geometry/geography that represents all points whose distance from this Geometry/geography is less than or equal to distance.
+`ST_AsText`| Return the Well-Known Text string representation of a geometry
+
 
 ## Architecture
 
