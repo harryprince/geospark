@@ -209,50 +209,59 @@ version](https://segmentfault.com/a/1190000008657566)
 
 ### Constructor
 
-ST_GeomFromWKT
-ST_GeomFromWKB
-ST_GeomFromGeoJSON
-ST_Point
-ST_PointFromText
-ST_PolygonFromText
-ST_LineStringFromText
-ST_PolygonFromEnvelope
-ST_Circle
+`ST_GeomFromWKT`|
+`ST_GeomFromWKB`|
+`ST_GeomFromGeoJSON`|
+`ST_Point`|
+`ST_PointFromText`|
+`ST_PolygonFromText`|
+`ST_LineStringFromText`|
+`ST_PolygonFromEnvelope`|
+`ST_Circle`|
 
 ### Geometry Measurement
 
-ST_Distance
-ST_Length
-ST_Area
+`ST_Length`|
+`ST_Area`|
 
-ST_ConvexHull
-ST_Envelope
-ST_Centroid
-ST_Transform
-ST_Intersection
-ST_IsValid
-ST_PrecisionReduce
-ST_IsSimple
-ST_Buffer
-ST_AsText
+`ST_ConvexHull`|
+`ST_Envelope`|
+`ST_Centroid`|
+`ST_Transform`|
+`ST_Intersection`|
+`ST_IsValid`|
+`ST_PrecisionReduce`|
+`ST_IsSimple`|
+`ST_Buffer`|
+`ST_AsText`|
 
 ### Spatial Join
 
-ST_Contains
-ST_Intersects
-ST_Within
-ST_Equals
-ST_Crosses
-ST_Touches
-ST_Overlaps
+`ST_Contains`|
+`ST_Intersects`|
+`ST_Within`|
+`ST_Equals`|
+`ST_Crosses`|
+`ST_Touches`|
+`ST_Overlaps`|
 
-Range join
-Distance join
+
+### Distance join
+
+`ST_Distance`:
+
+SPARK GIS SQL MODE:
+
+```
+SELECT *
+FROM pointdf1, pointdf2
+WHERE ST_Distance(pointdf1.pointshape1,pointdf2.pointshape2) <= 2
+```
 
 ## Aggregation
 
-ST_Envelope_Aggr
-ST_Union_Aggr
+ST_Envelope_Aggr|
+ST_Union_Aggr|
 
 ## Architecture
 
