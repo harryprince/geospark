@@ -205,6 +205,55 @@ Service](https://medium.com/@buckhx/unwinding-uber-s-most-efficient-service-4064
 and the [Chinese translation
 version](https://segmentfault.com/a/1190000008657566)
 
+## Functions
+
+### Constructor
+
+ST_GeomFromWKT
+ST_GeomFromWKB
+ST_GeomFromGeoJSON
+ST_Point
+ST_PointFromText
+ST_PolygonFromText
+ST_LineStringFromText
+ST_PolygonFromEnvelope
+ST_Circle
+
+### Geometry Measurement
+
+ST_Distance
+ST_Length
+ST_Area
+
+ST_ConvexHull
+ST_Envelope
+ST_Centroid
+ST_Transform
+ST_Intersection
+ST_IsValid
+ST_PrecisionReduce
+ST_IsSimple
+ST_Buffer
+ST_AsText
+
+### Spatial Join
+
+ST_Contains
+ST_Intersects
+ST_Within
+ST_Equals
+ST_Crosses
+ST_Touches
+ST_Overlaps
+
+Range join
+Distance join
+
+## Aggregation
+
+ST_Envelope_Aggr
+ST_Union_Aggr
+
 ## Architecture
 
 # ![](https://user-images.githubusercontent.com/5362577/53225664-bf6abc80-36b3-11e9-8b8e-41611fc7098e.png)
