@@ -209,6 +209,8 @@ version](https://segmentfault.com/a/1190000008657566)
 
 ### Constructor
 
+name|desc
+---|---
 `ST_GeomFromWKT`|
 `ST_GeomFromWKB`|
 `ST_GeomFromGeoJSON`|
@@ -221,9 +223,13 @@ version](https://segmentfault.com/a/1190000008657566)
 
 ### Geometry Measurement
 
+name|desc
+---|---
 `ST_Length`|
 `ST_Area`|
 
+name|desc
+---|---
 `ST_ConvexHull`|
 `ST_Envelope`|
 `ST_Centroid`|
@@ -237,6 +243,10 @@ version](https://segmentfault.com/a/1190000008657566)
 
 ### Spatial Join
 
+![](https://camo.githubusercontent.com/f18513c8002df02bdb6e3aac451519beb3c87ebb/68747470733a2f2f7365676d656e746661756c742e636f6d2f696d672f625662714665333f773d3132383026683d353038)
+
+name|desc
+---|---
 `ST_Contains`|
 `ST_Intersects`|
 `ST_Within`|
@@ -245,12 +255,11 @@ version](https://segmentfault.com/a/1190000008657566)
 `ST_Touches`|
 `ST_Overlaps`|
 
-
 ### Distance join
 
 `ST_Distance`:
 
-SPARK GIS SQL MODE:
+Spark GIS SQL mode example:
 
 ```
 SELECT *
@@ -258,10 +267,21 @@ FROM pointdf1, pointdf2
 WHERE ST_Distance(pointdf1.pointshape1,pointdf2.pointshape2) <= 2
 ```
 
+Tidyverse style example:
+
+```
+inner_join(x = pointdf1,
+           y = pointdf2,
+           by = sql("ST_Distance(pointshape1, pointshape2) <= 2"))
+```
+
+
 ## Aggregation
 
-ST_Envelope_Aggr|
-ST_Union_Aggr|
+name|desc
+---|---
+`ST_Envelope_Aggr`| Return the entire envelope boundary of all geometries in A
+`ST_Union_Aggr`|Return the polygon union of all polygons in A
 
 ## Architecture
 
