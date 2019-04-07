@@ -8,7 +8,7 @@ GeoSpark: Bring sf to spark
 Introduction & Philosophy
 -------------------------
 
-Goal: make tranditional GISer handle geospatial big data easier.
+Goal: make traditional GISer handle geospatial big data easier.
 
 The origin idea comes from [Uber](https://www.oreilly.com/ideas/query-the-planet-geospatial-big-data-analytics-at-uber), which proposed a ESRI Hive UDF + Presto solution to solve large-scale geospatial data processing problem with spatial index in production.
 
