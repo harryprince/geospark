@@ -71,9 +71,9 @@ Now we can perform a GeoSpatial join using the `st_contains` which converts `wkt
 ``` r
 DBI::dbGetQuery(sc, "
   SELECT area, state, count(*) cnt FROM
-    (SELECT area, ST_GeomFromWKT(polygons.geom ,'4326') as y FROM polygons) polygons
+    (SELECT area, ST_GeomFromWKT(polygons.geom ) as y FROM polygons) polygons
   INNER JOIN
-    (SELECT ST_GeomFromWKT (points.geom,'4326') as x, state, city FROM points) points
+    (SELECT ST_GeomFromWKT (points.geom) as x, state, city FROM points) points
   WHERE ST_Contains(polygons.y,points.x) GROUP BY area, state")
 ```
 
@@ -97,8 +97,8 @@ Then, you can join as follows:
 
 ``` r
 library(dplyr)
-polygons_wkt <- mutate(polygons_wkt, y = st_geomfromwkt(geom, "4326"))
-points_wkt <- mutate(points_wkt, x = st_geomfromwkt(geom, "4326"))
+polygons_wkt <- mutate(polygons_wkt, y = st_geomfromwkt(geom))
+points_wkt <- mutate(points_wkt, x = st_geomfromwkt(geom))
 
 sc_res = inner_join(polygons_wkt, points_wkt, by = sql("st_contains(y, x)")) %>%
   group_by(area, state) %>%
