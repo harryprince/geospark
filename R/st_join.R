@@ -28,8 +28,8 @@
 #' }
 #' @export
 st_join <- function(x, y, join = NULL) {
-    full_join(x %>% mutate(dummy_s4pu629cnd=TRUE),
-              y %>% mutate(dummy_s4pu629cnd=TRUE),
+    full_join(x %>% mutate(dummy_s4pu629cnd=TRUE) %>% compute(),
+              y %>% mutate(dummy_s4pu629cnd=TRUE) %>% compute(),
               by = "dummy_s4pu629cnd") %>% 
         filter(join) %>%
         select(-dummy_s4pu629cnd)

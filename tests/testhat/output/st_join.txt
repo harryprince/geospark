@@ -1,4 +1,6 @@
-|area            |geom.x        |city        |state |geom.y        |
+
+
+|area            |geom_x        |city        |state |geom_y        |
 |:---------------|:-------------|:-----------|:-----|:-------------|
 |california area |<environment> |Los Angeles |CA    |<environment> |
 |california area |<environment> |Los Angeles |CA    |<environment> |
