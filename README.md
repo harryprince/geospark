@@ -121,8 +121,8 @@ library(dplyr)
 polygons_wkt <- mutate(polygons_wkt, y = st_geomfromwkt(geom))
 points_wkt <- mutate(points_wkt, x = st_geomfromwkt(geom))
 
-sc_res = full_join(polygons_wkt  %>% mutate(dummy=TRUE),
-                   points_wkt %>% mutate(dummy=TRUE),
+sc_res = full_join(polygons_wkt  %>% mutate(dummy=TRUE) %>% compute(),
+                   points_wkt %>% mutate(dummy=TRUE) %>% compute(),
                    by = "dummy") %>% 
    filter(sql("st_contains(y,x)")) %>%
   group_by(area, state) %>%
