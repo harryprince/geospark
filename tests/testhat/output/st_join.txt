@@ -1,0 +1,42 @@
+|area            |geom.x        |city        |state |geom.y        |
+|:---------------|:-------------|:-----------|:-----|:-------------|
+|california area |<environment> |Los Angeles |CA    |<environment> |
+|california area |<environment> |Los Angeles |CA    |<environment> |
+|california area |<environment> |Los Angeles |CA    |<environment> |
+|california area |<environment> |Los Angeles |CA    |<environment> |
+|california area |<environment> |Los Angeles |CA    |<environment> |
+|california area |<environment> |Los Angeles |CA    |<environment> |
+|california area |<environment> |Los Angeles |CA    |<environment> |
+|california area |<environment> |Los Angeles |CA    |<environment> |
+|california area |<environment> |Los Angeles |CA    |<environment> |
+|california area |<environment> |Los Angeles |CA    |<environment> |
+|new york area   |<environment> |New York    |NY    |<environment> |
+|new york area   |<environment> |New York    |NY    |<environment> |
+|new york area   |<environment> |New York    |NY    |<environment> |
+|new york area   |<environment> |West Nyack  |NY    |<environment> |
+|new york area   |<environment> |West Point  |NY    |<environment> |
+|new york area   |<environment> |West Point  |NY    |<environment> |
+|new york area   |<environment> |Westtown    |NY    |<environment> |
+|new york area   |<environment> |Floral Park |NY    |<environment> |
+|new york area   |<environment> |Floral Park |NY    |<environment> |
+|texas area      |<environment> |Austin      |TX    |<environment> |
+|texas area      |<environment> |Austin      |TX    |<environment> |
+|texas area      |<environment> |Addison     |TX    |<environment> |
+|texas area      |<environment> |Allen       |TX    |<environment> |
+|texas area      |<environment> |Carrollton  |TX    |<environment> |
+|texas area      |<environment> |Carrollton  |TX    |<environment> |
+|texas area      |<environment> |Carrollton  |TX    |<environment> |
+|texas area      |<environment> |Celina      |TX    |<environment> |
+|texas area      |<environment> |Carrollton  |TX    |<environment> |
+|texas area      |<environment> |Carrollton  |TX    |<environment> |
+|dakota area     |<environment> |Aurora      |SD    |<environment> |
+|dakota area     |<environment> |Minot       |ND    |<environment> |
+|dakota area     |<environment> |Abercrombie |ND    |<environment> |
+|dakota area     |<environment> |Absaraka    |ND    |<environment> |
+|dakota area     |<environment> |Amenia      |ND    |<environment> |
+|dakota area     |<environment> |Argusville  |ND    |<environment> |
+|dakota area     |<environment> |Arthur      |ND    |<environment> |
+|dakota area     |<environment> |Ayr         |ND    |<environment> |
+|dakota area     |<environment> |Barney      |ND    |<environment> |
+|dakota area     |<environment> |Blanchard   |ND    |<environment> |
+|dakota area     |<environment> |Buffalo     |ND    |<environment> |
