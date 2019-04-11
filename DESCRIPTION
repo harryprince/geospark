@@ -13,5 +13,5 @@ Depends:
   R (>= 3.1.2)
 Imports:
   sparklyr (>= 1.0.0),
-  dplyr (>= 0.9.0)
+  dplyr (>= 0.8.0)
 RoxygenNote: 6.0.1.9000
