@@ -1,6 +1,6 @@
 #' @title spatial join
 #' @name st_join
-#' @import sparklyr
+#' @import dplyr
 #' @param x a spark spatial data frame
 #' @param y a spark spatial data frame
 #' @description 
@@ -28,7 +28,7 @@
 #' }
 #' @export
 st_join <- function(x, y, join = NULL) {
-    full_join(x  %>% mutate(dummy_s4pu629cnd=TRUE),
+    full_join(x %>% mutate(dummy_s4pu629cnd=TRUE),
               y %>% mutate(dummy_s4pu629cnd=TRUE),
               by = "dummy_s4pu629cnd") %>% 
         filter(join) %>%

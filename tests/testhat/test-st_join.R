@@ -6,9 +6,9 @@ test_requires("knitr")
 
 test_that("st_join() works", {
     expect_known_output({
-        
-        st_join(st_plg_example(sc) ,
-                st_pit_example(sc) , join = sql("st_contains(`geom.x`,`geom.y`)")) %>%
+        st_join(st_example(sc, "polygons") %>% select(area, geom_x = geom) ,
+                st_example(sc, "points") %>% select(city, state, geom_y = geom) ,
+                join = sql("st_contains(`geom_x`,`geom_y`)")) %>%
             collect() %>%
             knitr::kable()
     }
