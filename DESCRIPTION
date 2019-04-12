@@ -1,7 +1,7 @@
 Package: geospark
 Type: Package
 Title: Bring Local Sf to Spark
-Version: 0.0.2
+Version: 0.2.1
 Author: Harry Zhu
 Maintainer: Harry Zhu <7harryprince@gmail.com>
 BugReports: https://github.com/harryprince/geospark/issues
