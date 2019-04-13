@@ -7,7 +7,10 @@
 register_gis(sc)
 }
 \arguments{
-\item{sc}{a sparklyr connection}
+\item{sc}{a spark connection}
+}
+\value{
+a GIS spark connection
 }
 \description{
 register_gis: to enable spark geospark sql in sc, the more GIS SQL references could be found at https://github.com/harryprince/geospark/blob/master/Reference.md
@@ -17,4 +20,5 @@ register_gis: to enable spark geospark sql in sc, the more GIS SQL references co
 register_gis(sc)
 point = DBI::dbGetQuery(sc,"SELECT ST_GeomFromWKT('POINT(40.7128,-74.0060)') AS geometry")
 }
+
 }

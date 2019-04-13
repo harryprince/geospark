@@ -6,6 +6,14 @@
 \usage{
 st_example(sc, geom = "polygons")
 }
+\arguments{
+\item{sc}{an object of spark connection}
+
+\item{geom}{a string of geometry type}
+}
+\value{
+a data.frame contains wkt format column example
+}
 \description{
 Spark geometry example.
 }

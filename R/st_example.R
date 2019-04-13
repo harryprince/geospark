@@ -1,5 +1,8 @@
 #' Spark geometry example.
 #'
+#' @param sc an object of spark connection
+#' @param geom a string of geometry type 
+#'
 #' @examples
 #' \dontrun{
 #' library(sparklyr)
@@ -9,6 +12,8 @@
 #' point_wkt <- st_example(sc, "points")
 #' }
 #' @details geometry can be  "polygons" or "points"
+#' 
+#' @return a data.frame contains wkt format column example
 #' 
 #' @export
 st_example <- function(sc, geom = "polygons") {

@@ -3,8 +3,11 @@
 #' @import dplyr
 #' @param x a spark spatial data frame
 #' @param y a spark spatial data frame
+#' @param join join condition
 #' @description 
 #' st_join: spatial join 
+#' 
+#' @import utils
 #' 
 #' @details alternative values for argument join are: ST_Contains, ST_Intersects, ST_Within, ST_Equals, ST_Crosses, ST_Touches, ST_Overlaps, ST_Distance
 #' 
@@ -14,15 +17,17 @@
 #' \dontrun{
 #' 
 #' library(dplyr)
-#' polygons <- read.table(system.file(package="geospark","examples/polygons.txt"), sep="|", col.names=c("area","geom"))
-#' points <- read.table(system.file(package="geospark","examples/points.txt"), sep="|", col.names=c("city","state","geom"))
+#' polygons <- read.table(system.file(package="geospark","examples/polygons.txt"),
+#'                        sep="|", col.names=c("area","geom"))
+#' points <- read.table(system.file(package="geospark","examples/points.txt"),
+#'                        sep="|", col.names=c("city","state","geom"))
 #' polygons_wkt <- copy_to(sc, polygons)
 #' points_wkt <- copy_to(sc, points)
 
 #' polygons_wkt <- mutate(polygons_wkt, y = st_geomfromwkt(geom))
 #' points_wkt <- mutate(points_wkt, x = st_geomfromwkt(geom))
 
-#' sc_res = st_join(polygons_wkt, points_wkt, join = sql("st_contains(y,x)"))
+#' sc_res <- st_join(polygons_wkt, points_wkt, join = sql("st_contains(y,x)"))
 #'     group_by(area, state) %>%
 #'     summarise(cnt = n()) 
 #' }

@@ -5,7 +5,7 @@ Version: 0.2.1
 Author: Harry Zhu
 Maintainer: Harry Zhu <7harryprince@gmail.com>
 BugReports: https://github.com/harryprince/geospark/issues
-Description: R binds geospark extending sparklyr R package to make geocomputing easier.
+Description: R binds geospark extending sparklyr R package to make distributed geocomputing easier.
 License: Apache License
 Encoding: UTF-8
 LazyData: true
