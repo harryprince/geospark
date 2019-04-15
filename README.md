@@ -121,10 +121,9 @@ library(dplyr)
 polygons_wkt <- mutate(polygons_wkt, y = st_geomfromwkt(geom))
 points_wkt <- mutate(points_wkt, x = st_geomfromwkt(geom))
 
-sc_res = full_join(polygons_wkt  %>% mutate(dummy=TRUE) %>% compute(),
-                   points_wkt %>% mutate(dummy=TRUE) %>% compute(),
-                   by = "dummy") %>% 
-   filter(sql("st_contains(y,x)")) %>%
+sc_res <- st_join(polygons_wkt,
+                  points_wkt,
+                  join = sql("st_contains(y,x)")) %>% 
   group_by(area, state) %>%
   summarise(cnt = n()) 
   
@@ -261,9 +260,9 @@ WHERE ST_Distance(pointdf1.pointshape1,pointdf2.pointshape2) <= 2
 Tidyverse style example:
 
 ```
-inner_join(x = pointdf1,
+st_join(x = pointdf1,
            y = pointdf2,
-           by = sql("ST_Distance(pointshape1, pointshape2) <= 2"))
+           join = sql("ST_Distance(pointshape1, pointshape2) <= 2"))
 ```
 
 
