@@ -27,7 +27,7 @@
 #' polygons_wkt <- mutate(polygons_wkt, y = st_geomfromwkt(geom))
 #' points_wkt <- mutate(points_wkt, x = st_geomfromwkt(geom))
 
-#' sc_res <- st_join(polygons_wkt, points_wkt, join = sql("st_contains(y,x)"))
+#' sc_res <- st_join(polygons_wkt, points_wkt, join = sql("st_contains(y,x)")) %>%
 #'     group_by(area, state) %>%
 #'     summarise(cnt = n()) 
 #' }
