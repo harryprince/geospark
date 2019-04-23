@@ -198,7 +198,7 @@ performance(ms),
 | 1   | 9631               | 480          | 40,784                            |
 | 2   | 110872             | 394          | 64,217                            |
 
-According to this papaer, the Geospark SQL definitely outperforms PG and
+According to this paper, the Geospark SQL definitely outperforms PG and
 ESRI UDF under a very large data set.
 
 
