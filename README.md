@@ -30,7 +30,7 @@ comparison](https://github.com/harryprince/geospark/wiki/SF-Migration-Guide). An
 ## Installation
 
 This package requires Apache Spark 2.X which you can install using
-`sparklyr::install_spark("2.4")`; in addition, you can install
+`sparklyr::install_spark("2.3")`, and spark2.4 is not supported yet; in addition, you can install
 `geospark` as follows:
 
 ``` r
