@@ -47,9 +47,7 @@ using `sparklyr`:
 library(sparklyr)
 library(geospark)
 
-conf <- spark_config()
-sc <- spark_connect(master = "local", config = conf)
-register_gis(sc)
+sc <- spark_connect(master = "local")
 ```
 
 Next we will load some spatial dataset containing as polygons and
@@ -79,20 +77,19 @@ M1+M2
 
 ![](https://segmentfault.com/img/bVbqmP9/view?w=1198&h=766)
 
-### The Spark GIS SQL Mode
+### The SQL Mode
 
 Now we can perform a GeoSpatial join using the `st_contains` which
-converts `wkt` into geometry object with 4326 `crs` which means a
-`wgs84` projection. To get the original data from `wkt` format, we will
-use the `st_geomfromwkt` functions. We can execute this spatial query
-using `DBI`:
+converts `wkt` into geometry object. To get the original data from `wkt`
+format, we will use the `st_geomfromwkt` functions. We can execute this
+spatial query using `DBI`:
 
 ``` r
 DBI::dbGetQuery(sc, "
   SELECT area, state, count(*) cnt FROM
-    (SELECT area, ST_GeomFromWKT(polygons.geom ,'4326') as y FROM polygons) polygons
+    (SELECT area, ST_GeomFromWKT(polygons.geom) as y FROM polygons) polygons
   INNER JOIN
-    (SELECT ST_GeomFromWKT (points.geom,'4326') as x, state, city FROM points) points
+    (SELECT ST_GeomFromWKT (points.geom) as x, state, city FROM points) points
   WHERE ST_Contains(polygons.y,points.x) GROUP BY area, state")
 ```
 
@@ -107,23 +104,16 @@ DBI::dbGetQuery(sc, "
 
 ### The Tidyverse Mode
 
-You can also perform this query using `dplyr 0.9` installed through:
-
-``` r
-remotes::install_github("tidyverse/dplyr")
-remotes::install_github("tidyverse/dbplyr")
-```
-
-Then, you can join as follows:
+You can also perform this query using `dplyr` as follows:
 
 ``` r
 library(dplyr)
 polygons_wkt <- mutate(polygons_wkt, y = st_geomfromwkt(geom))
 points_wkt <- mutate(points_wkt, x = st_geomfromwkt(geom))
 
-sc_res <- st_join(polygons_wkt,
-                  points_wkt,
-                  join = sql("st_contains(y,x)")) %>% 
+sc_res <- inner_join(polygons_wkt,
+                     points_wkt,
+                     sql_on = sql("st_contains(y,x)")) %>% 
   group_by(area, state) %>%
   summarise(cnt = n()) 
   
