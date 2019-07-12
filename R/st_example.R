@@ -7,7 +7,7 @@
 #' \dontrun{
 #' library(sparklyr)
 #' sc <- spark_connect(master = "local")
-#' register_gis(sc)
+#' 
 #' polygons_wkt <- st_example(sc, "polygons")
 #' point_wkt <- st_example(sc, "points")
 #' }
