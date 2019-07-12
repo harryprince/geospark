@@ -3,3 +3,5 @@
 ^\.travis\.yml$
 Reference.md$
 ^docs/
+^logs$
+^derby\.log$
