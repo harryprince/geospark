@@ -1,17 +1,11 @@
----
-title: "GeoSpark: Bring sf to spark"
-output:
-  github_document:
-    fig_width: 9
-    fig_height: 5
----
+GeoSpark: Bring sf to spark
+================
 
 ![](https://image-static.segmentfault.com/101/895/1018959988-5c9809116a126)
 
 ![](https://camo.githubusercontent.com/31267b3e96ca20997396b88f7c44233710fcc637/687474703a2f2f7777772e7265706f7374617475732e6f72672f6261646765732f6c61746573742f6163746976652e737667)
 [![CRAN version](https://www.r-pkg.org/badges/version/geospark)](https://CRAN.R-project.org/package=geospark)
 [![Build Status](https://travis-ci.org/harryprince/geospark.svg?branch=master)](https://travis-ci.org/harryprince/geospark)
-[![]()](https://github.com/ropensci/software-review/issues/288)
 
 ## Introduction & Philosophy
 
@@ -72,7 +66,6 @@ M2 = points %>%
 sf::st_as_sf(wkt="geom") %>% mapview::mapview()
 
 M1+M2
-
 ```
 
 ![](https://segmentfault.com/img/bVbqmP9/view?w=1198&h=766)
@@ -122,15 +115,15 @@ sc_res %>%
 ```
 
 ```
-    # Source: spark<?> [?? x 3]
-    # Groups: area
-      area            state   cnt
-      <chr>           <chr> <dbl>
-    1 texas area      TX       10
-    2 dakota area     SD        1
-    3 dakota area     ND       10
-    4 california area CA       10
-    5 new york area   NY        9
+# Source: spark<?> [?? x 3]
+# Groups: area
+  area            state   cnt
+  <chr>           <chr> <dbl>
+1 texas area      TX       10
+2 dakota area     SD        1
+3 dakota area     ND       10
+4 california area CA       10
+5 new york area   NY        9
 ```
 
 The final result can be present by `leaflet`.
