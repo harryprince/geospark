@@ -13,7 +13,7 @@ Depends:
   R (>= 3.1.2)
 Imports:
   sparklyr (>= 1.0.0),
-  dplyr (>= 0.8.0)
+  dplyr (>= 0.8.3)
 RoxygenNote: 6.1.0
 Suggests:
   testthat
