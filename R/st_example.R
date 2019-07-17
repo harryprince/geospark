@@ -7,7 +7,7 @@
 #' \dontrun{
 #' library(sparklyr)
 #' sc <- spark_connect(master = "local")
-#' register_gis(sc)
+#' 
 #' polygons_wkt <- st_example(sc, "polygons")
 #' point_wkt <- st_example(sc, "points")
 #' }
@@ -28,7 +28,8 @@ st_example <- function(sc, geom = "polygons") {
     )
     
     geoms_wkt <- copy_to(dest = sc, df = geoms, name = sprintf("geospark_example_%s",geom), overwrite = T) %>% 
-        mutate(geom = st_geomfromwkt(geom))
+        dplyr::mutate(geom = dplyr::sql("st_geomfromwkt(geom)"))
+    
     return(geoms_wkt)
 }
 

@@ -1,17 +1,11 @@
----
-title: "GeoSpark: Bring sf to spark"
-output:
-  github_document:
-    fig_width: 9
-    fig_height: 5
----
+GeoSpark: Bring sf to spark
+================
 
 ![](https://image-static.segmentfault.com/101/895/1018959988-5c9809116a126)
 
 ![](https://camo.githubusercontent.com/31267b3e96ca20997396b88f7c44233710fcc637/687474703a2f2f7777772e7265706f7374617475732e6f72672f6261646765732f6c61746573742f6163746976652e737667)
 [![CRAN version](https://www.r-pkg.org/badges/version/geospark)](https://CRAN.R-project.org/package=geospark)
 [![Build Status](https://travis-ci.org/harryprince/geospark.svg?branch=master)](https://travis-ci.org/harryprince/geospark)
-[![]()](https://github.com/ropensci/software-review/issues/288)
 
 ## Introduction & Philosophy
 
@@ -47,9 +41,7 @@ using `sparklyr`:
 library(sparklyr)
 library(geospark)
 
-conf <- spark_config()
-sc <- spark_connect(master = "local", config = conf)
-register_gis(sc)
+sc <- spark_connect(master = "local")
 ```
 
 Next we will load some spatial dataset containing as polygons and
@@ -74,25 +66,23 @@ M2 = points %>%
 sf::st_as_sf(wkt="geom") %>% mapview::mapview()
 
 M1+M2
-
 ```
 
 ![](https://segmentfault.com/img/bVbqmP9/view?w=1198&h=766)
 
-### The Spark GIS SQL Mode
+### The SQL Mode
 
 Now we can perform a GeoSpatial join using the `st_contains` which
-converts `wkt` into geometry object with 4326 `crs` which means a
-`wgs84` projection. To get the original data from `wkt` format, we will
-use the `st_geomfromwkt` functions. We can execute this spatial query
-using `DBI`:
+converts `wkt` into geometry object. To get the original data from `wkt`
+format, we will use the `st_geomfromwkt` functions. We can execute this
+spatial query using `DBI`:
 
 ``` r
 DBI::dbGetQuery(sc, "
   SELECT area, state, count(*) cnt FROM
-    (SELECT area, ST_GeomFromWKT(polygons.geom ,'4326') as y FROM polygons) polygons
+    (SELECT area, ST_GeomFromWKT(polygons.geom) as y FROM polygons) polygons
   INNER JOIN
-    (SELECT ST_GeomFromWKT (points.geom,'4326') as x, state, city FROM points) points
+    (SELECT ST_GeomFromWKT (points.geom) as x, state, city FROM points) points
   WHERE ST_Contains(polygons.y,points.x) GROUP BY area, state")
 ```
 
@@ -107,23 +97,16 @@ DBI::dbGetQuery(sc, "
 
 ### The Tidyverse Mode
 
-You can also perform this query using `dplyr 0.9` installed through:
-
-``` r
-remotes::install_github("tidyverse/dplyr")
-remotes::install_github("tidyverse/dbplyr")
-```
-
-Then, you can join as follows:
+You can also perform this query using `dplyr` as follows:
 
 ``` r
 library(dplyr)
 polygons_wkt <- mutate(polygons_wkt, y = st_geomfromwkt(geom))
 points_wkt <- mutate(points_wkt, x = st_geomfromwkt(geom))
 
-sc_res <- st_join(polygons_wkt,
-                  points_wkt,
-                  join = sql("st_contains(y,x)")) %>% 
+sc_res <- inner_join(polygons_wkt,
+                     points_wkt,
+                     sql_on = sql("st_contains(y,x)")) %>% 
   group_by(area, state) %>%
   summarise(cnt = n()) 
   
@@ -132,15 +115,15 @@ sc_res %>%
 ```
 
 ```
-    # Source: spark<?> [?? x 3]
-    # Groups: area
-      area            state   cnt
-      <chr>           <chr> <dbl>
-    1 texas area      TX       10
-    2 dakota area     SD        1
-    3 dakota area     ND       10
-    4 california area CA       10
-    5 new york area   NY        9
+# Source: spark<?> [?? x 3]
+# Groups: area
+  area            state   cnt
+  <chr>           <chr> <dbl>
+1 texas area      TX       10
+2 dakota area     SD        1
+3 dakota area     ND       10
+4 california area CA       10
+5 new york area   NY        9
 ```
 
 The final result can be present by `leaflet`.

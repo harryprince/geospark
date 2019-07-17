@@ -2,7 +2,10 @@ Package: geospark
 Type: Package
 Title: Bring Local Sf to Spark
 Version: 0.2.1
-Author: Harry Zhu
+Authors@R: c(
+    person("Harry", "Zhu", email = "7harryprince@gmail.com", role = c("aut", "cre")),
+    person("Javier", "Luraschi", email = "javier@rstudio.com", role = c("ctb"))
+    )
 Maintainer: Harry Zhu <7harryprince@gmail.com>
 BugReports: https://github.com/harryprince/geospark/issues
 Description: R binds 'GeoSpark' <http://geospark.datasyslab.org/> extending 'sparklyr' <https://spark.rstudio.com/> R package to make distributed geocomputing easier.
@@ -13,7 +16,7 @@ Depends:
   R (>= 3.1.2)
 Imports:
   sparklyr (>= 1.0.0),
-  dplyr (>= 0.8.0)
+  dplyr (>= 0.8.3)
 RoxygenNote: 6.1.0
 Suggests:
   testthat

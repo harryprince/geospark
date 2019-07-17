@@ -2,7 +2,6 @@
 
 export(register_gis)
 export(st_example)
-export(st_join)
 import(dplyr)
 import(sparklyr)
 import(utils)

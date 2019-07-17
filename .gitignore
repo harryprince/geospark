@@ -2,3 +2,5 @@
 .Rproj.user
 .inst/.DS*
 .Rhistory
+derby.log
+logs/
