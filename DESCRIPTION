@@ -19,5 +19,4 @@ Imports:
   dplyr (>= 0.8.3)
 RoxygenNote: 6.1.0
 Suggests:
-  testthat
-  knitr
+  testthat, knitr
