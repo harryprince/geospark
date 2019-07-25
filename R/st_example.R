@@ -4,7 +4,7 @@
 #' @param geom a string of geometry type 
 #'
 #' @examples
-#' \dontrun{
+#' 
 #' library(sparklyr)
 #' sc <- spark_connect(master = "local")
 #' 
