@@ -8,7 +8,7 @@ Authors@R: c(
     )
 Maintainer: Harry Zhu <7harryprince@gmail.com>
 BugReports: https://github.com/harryprince/geospark/issues
-Description: R binds 'GeoSpark' <http://geospark.datasyslab.org/> extending 'sparklyr' <https://spark.rstudio.com/> R package to make distributed geocomputing easier.
+Description: R binds 'GeoSpark' <http://geospark.datasyslab.org/> extending 'sparklyr' <https://spark.rstudio.com/> R package to make distributed geocomputing easier. Sf is a package that provides [simple features](https://en.wikipedia.org/wiki/Simple_Features) access for R and which is a leading geospatial data processing tool. Geospark R package bring the same simple features access like sf but running on Spark distributed system.
 License: Apache License (>= 2.0)
 Encoding: UTF-8
 LazyData: true
