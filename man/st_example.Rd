@@ -20,12 +20,3 @@ Spark geometry example.
 \details{
 geometry can be  "polygons" or "points"
 }
-\examples{
-\dontrun{
-library(sparklyr)
-sc <- spark_connect(master = "local")
-register_gis(sc)
-polygons_wkt <- st_example(sc, "polygons")
-point_wkt <- st_example(sc, "points")
-}
-}

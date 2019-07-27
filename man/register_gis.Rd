@@ -7,18 +7,23 @@
 register_gis(sc)
 }
 \arguments{
-\item{sc}{a spark connection}
+\item{sc}{a spark connection
+
+Used by 'sparklyr' to initilize GIS SQL.}
 }
 \value{
 a GIS spark connection
 }
 \description{
-register_gis: to enable spark geospark sql in sc, the more GIS SQL references could be found at https://github.com/harryprince/geospark/blob/master/Reference.md
+Enable GIS SQL
 }
 \examples{
-\dontrun{
+library(geospark)
+library(sparklyr)
+
+sc <- spark_connect(master = "spark://HOST:PORT")
+
+# spark_connect() calls register_gis() automatically, as in:
 register_gis(sc)
-point = DBI::dbGetQuery(sc,"SELECT ST_GeomFromWKT('POINT(40.7128,-74.0060)') AS geometry")
-}
 
 }
