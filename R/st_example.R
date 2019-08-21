@@ -4,14 +4,16 @@
 #' @param geom a string of geometry type 
 #'
 #' @examples
-#' 
+#' library(geospark)
 #' library(sparklyr)
-#' sc <- spark_connect(master = "local")
 #' 
-#' polygons_wkt <- st_example(sc, "polygons")
-#' point_wkt <- st_example(sc, "points")
-#' }
-#' @details geometry can be  "polygons" or "points"
+#' # use the proper master, like 'local', 'yarn', etc.
+#' sc <- spark_connect(master = "spark://HOST:PORT")
+#' 
+#' st_example(sc, "polygons")
+#' st_example(sc, "points")
+#' 
+#' @details geometry can be "polygons" or "points"
 #' 
 #' @return a data.frame contains wkt format column example
 #' 
