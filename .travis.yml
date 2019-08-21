@@ -7,3 +7,10 @@ cache: packages
 jobs:
   include:
   - r: 3.5
+
+env:
+  - JAVA_VERSION=oraclejdk8
+
+before_install:
+  - if [[ ! -z "$JAVA_VERSION" ]]; then jdk_switcher use $JAVA_VERSION ; fi
+  - echo $JAVA_HOME
