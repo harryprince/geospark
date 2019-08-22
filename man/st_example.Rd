@@ -18,5 +18,16 @@ a data.frame contains wkt format column example
 Spark geometry example.
 }
 \details{
-geometry can be  "polygons" or "points"
+geometry can be "polygons" or "points"
+}
+\examples{
+library(geospark)
+library(sparklyr)
+
+# use the proper master, like 'local', 'yarn', etc.
+sc <- spark_connect(master = "spark://HOST:PORT")
+
+st_example(sc, "polygons")
+st_example(sc, "points")
+
 }
