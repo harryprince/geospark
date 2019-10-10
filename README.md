@@ -6,6 +6,7 @@ GeoSpark: Bring sf to spark
 ![](https://camo.githubusercontent.com/31267b3e96ca20997396b88f7c44233710fcc637/687474703a2f2f7777772e7265706f7374617475732e6f72672f6261646765732f6c61746573742f6163746976652e737667)
 [![CRAN version](https://www.r-pkg.org/badges/version/geospark)](https://CRAN.R-project.org/package=geospark)
 [![Build Status](https://travis-ci.org/harryprince/geospark.svg?branch=master)](https://travis-ci.org/harryprince/geospark)
+![](https://cranlogs.r-pkg.org/badges/geospark)
 
 ## Introduction & Philosophy
 
