@@ -43,6 +43,7 @@ library(sparklyr)
 library(geospark)
 
 sc <- spark_connect(master = "local")
+register_gis(sc)
 ```
 
 Next we will load some spatial dataset containing as polygons and
