@@ -1,7 +1,7 @@
 Package: geospark
 Type: Package
 Title: Bring Local Sf to Spark
-Version: 0.2.1
+Version: 0.3.1
 Authors@R: c(
     person("Harry", "Zhu", email = "7harryprince@gmail.com", role = c("aut", "cre")),
     person("Javier", "Luraschi", email = "javier@rstudio.com", role = c("ctb"))
@@ -9,9 +9,9 @@ Authors@R: c(
 Maintainer: Harry Zhu <7harryprince@gmail.com>
 BugReports: https://github.com/harryprince/geospark/issues
 Description: R binds 'GeoSpark' <http://geospark.datasyslab.org/> extending 'sparklyr' 
-    <https://spark.rstudio.com/> R package to make distributed geocomputing easier. Sf is a
-    package that provides [simple features](https://en.wikipedia.org/wiki/Simple_Features) access
-    for R and which is a leading geospatial data processing tool. Geospark R package bring 
+    <https://spark.rstudio.com/> R package to make distributed 'geocomputing' easier. Sf is a
+    package that provides [simple features] <https://en.wikipedia.org/wiki/Simple_Features> access
+    for R and which is a leading 'geospatial' data processing tool. 'Geospark' R package bring 
     the same simple features access like sf but running on Spark distributed system.
 License: Apache License (>= 2.0)
 Encoding: UTF-8
@@ -24,4 +24,4 @@ Imports:
   dbplyr (>= 1.3.0)
 RoxygenNote: 6.1.1
 Suggests:
-  testthat, knitr
+  testthat, knitr, utils

@@ -23,6 +23,7 @@ geometry can be "polygons" or "points"
 \examples{
 library(geospark)
 library(sparklyr)
+library(utils)
 
 # use the proper master, like 'local', 'yarn', etc.
 sc <- spark_connect(master = "spark://HOST:PORT")

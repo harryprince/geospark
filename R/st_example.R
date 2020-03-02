@@ -6,6 +6,7 @@
 #' @examples
 #' library(geospark)
 #' library(sparklyr)
+#' library(utils)
 #' 
 #' # use the proper master, like 'local', 'yarn', etc.
 #' sc <- spark_connect(master = "spark://HOST:PORT")
@@ -19,7 +20,7 @@
 #' 
 #' @export
 st_example <- function(sc, geom = "polygons") {
-    geoms <- read.table(system.file(package="geospark",sprintf("examples/%s.txt",geom)), sep="|")
+    geoms <- utils::read.table(system.file(package="geospark",sprintf("examples/%s.txt",geom)), sep="|")
     switch (geom,
         "polygons" = {
             colnames(geoms) <- c("area","geom")
