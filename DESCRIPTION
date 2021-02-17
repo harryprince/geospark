@@ -19,9 +19,6 @@ LazyData: true
 Depends:
   R (>= 3.1.2)
 Imports:
-  sparklyr (>= 1.0.0),
-  dplyr (>= 0.8.3),
-  dbplyr (>= 1.3.0)
 RoxygenNote: 6.1.1
 Suggests:
   testthat, knitr, utils
