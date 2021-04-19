@@ -18,6 +18,6 @@
 #' 
 #' @export
 register_gis <- function(sc) {
-    sparklyr::invoke_static(sc,"org.datasyslab.geosparksql.utils.GeoSparkSQLRegistrator","registerAll",spark_session(sc))
+    sparklyr::invoke_static(sc,"org.apache.sedona.sql.utils.SedonaSQLRegistrator","registerAll",spark_session(sc))
     return(invisible(sc))
 }
